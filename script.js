@@ -50,7 +50,7 @@ let wheelOutcomes = [
 let players = [];
 let currentPlayerIndex = 0;
 
-document.getElementById('addPlayer').addEventListener('click', function() {
+function addPlayer() {
     const playerName = document.getElementById('playerName').value;
     if (playerName) {
         players.push(playerName);
@@ -58,6 +58,14 @@ document.getElementById('addPlayer').addEventListener('click', function() {
         playerListItem.textContent = playerName;
         document.getElementById('playerList').appendChild(playerListItem);
         document.getElementById('playerName').value = '';
+    }
+}
+
+document.getElementById('addPlayer').addEventListener('click', addPlayer);
+
+document.getElementById('playerName').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        addPlayer();
     }
 });
 
@@ -67,9 +75,47 @@ document.getElementById('startGame').addEventListener('click', function() {
         document.getElementById('gameArea').classList.remove('hidden');
         document.getElementById('currentPlayer').textContent = `${players[currentPlayerIndex]}'s Turn`;
     } else {
-        alert('Please add at least one player!');
+        alert('Please add at least one player!");
     }
 });
 
 document.getElementById('pickCardButton').addEventListener('click', function() {
-    const allCards = [...truths, ...dares, ...mandatoryCards, { type: "Spank Wheel", content: "Spin
+    const allCards = [...truths, ...dares, ...mandatoryCards, { type: "Spank Wheel", content: "Spin the Spanking Wheel", instructions: "Spin the wheel to receive your fate." }];
+    const pickedCard = allCards[Math.floor(Math.random() * allCards.length)];
+    
+    document.getElementById('cardType').textContent = pickedCard.type;
+    document.getElementById('instructions').textContent = pickedCard.instructions;
+    
+    if (pickedCard.type === "Spank Wheel") {
+        document.getElementById('spinButton').classList.remove('hidden');
+    } else {
+        document.getElementById('spinButton').classList.add('hidden');
+    }
+    
+    document.getElementById('card').classList.add('flip');
+    setTimeout(() => {
+        document.getElementById('card').classList.remove('hidden');
+        document.getElementById('nextTurn').classList.remove('hidden');
+    }, 600);
+});
+
+document.getElementById('spinButton').addEventListener('click', function() {
+    const wheel = document.getElementById('wheel');
+    wheel.classList.add('spin-animation');
+
+    setTimeout(function() {
+        wheel.classList.remove('spin-animation');
+        const result = wheelOutcomes[Math.floor(Math.random() * wheelOutcomes.length)];
+        document.getElementById('instructions').textContent = result;
+    }, 3000);
+});
+
+document.getElementById('nextTurn').addEventListener('click', function() {
+    document.getElementById('card').classList.remove('flip');
+    document.getElementById('card').classList.add('hidden');
+    document.getElementById('nextTurn').classList.add('hidden');
+    document.getElementById('instructions').textContent = '';
+
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    document.getElementById('currentPlayer').textContent = `${players[currentPlayerIndex]}'s Turn`;
+});

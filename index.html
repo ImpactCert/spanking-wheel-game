@@ -22,25 +22,20 @@
         <!-- Game Area -->
         <div id="gameArea" class="game-area hidden">
             <h2 id="currentPlayer"></h2>
-            <button id="truthButton">Pick a Truth</button>
-            <button id="dareButton">Pick a Dare</button>
-            <button id="mandatoryButton">Pick a Mandatory Card</button>
-            <div id="wheel">
-                <div id="spinButton">Spin the Spanking Wheel</div>
+            <button id="pickCardButton">Pick a Card</button>
+            <div id="card" class="card hidden">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h2>Pick a Card</h2>
+                    </div>
+                    <div class="card-back">
+                        <h2 id="cardType"></h2>
+                        <p id="instructions"></p>
+                        <button id="spinButton" class="hidden">Spin the Spanking Wheel</button>
+                    </div>
+                </div>
             </div>
-            <div id="result"></div>
-            <button id="nextTurn">Next Turn</button>
-        </div>
-
-        <!-- Add Your Own Section -->
-        <div class="add-your-own">
-            <h2>Add Your Own</h2>
-            <input type="text" id="newTruth" placeholder="Enter new truth">
-            <button id="addTruth">Add Truth</button>
-            <input type="text" id="newDare" placeholder="Enter new dare">
-            <button id="addDare">Add Dare</button>
-            <input type="text" id="newOutcome" placeholder="Enter new wheel outcome">
-            <button id="addOutcome">Add Spanking Wheel Outcome</button>
+            <button id="nextTurn" class="hidden">Next Turn</button>
         </div>
     </div>
     <script src="script.js"></script>

@@ -12,6 +12,12 @@ let dares = [
     "Pull your pants down and hold your ankles in the corner until your next turn."
 ];
 
+let mandatoryCards = [
+    "Masturbate in front of everyone for 1 minute; if not, receive a full discipline spanking from other players. 10 minutes—5 mins of hand, 5 mins of implements.",
+    "Get spanked 15 times with the paddle and hand (total of 30) by all other players.",
+    "Give 10 spanks each to the other players, pants down, and send them to the corner for two rounds."
+];
+
 let wheelOutcomes = [
     "Receive 10 spanks with a paddle.",
     "Receive 15 spanks with a hand.",
@@ -29,9 +35,23 @@ document.getElementById('dareButton').addEventListener('click', function() {
     document.getElementById('result').textContent = result;
 });
 
-document.getElementById('spinButton').addEventListener('click', function() {
-    const result = wheelOutcomes[Math.floor(Math.random() * wheelOutcomes.length)];
+document.getElementById('mandatoryButton').addEventListener('click', function() {
+    const result = mandatoryCards[Math.floor(Math.random() * mandatoryCards.length)];
     document.getElementById('result').textContent = result;
+});
+
+document.getElementById('spinButton').addEventListener('click', function() {
+    const wheel = document.getElementById('wheel');
+    
+    // Start the spinning animation
+    wheel.classList.add('spin-animation');
+
+    // Choose a random outcome after the animation ends
+    setTimeout(function() {
+        wheel.classList.remove('spin-animation');
+        const result = wheelOutcomes[Math.floor(Math.random() * wheelOutcomes.length)];
+        document.getElementById('result').textContent = result;
+    }, 3000);  // Match this duration with the animation duration in CSS
 });
 
 document.getElementById('addTruth').addEventListener('click', function() {

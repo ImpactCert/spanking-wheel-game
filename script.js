@@ -25,6 +25,30 @@ let wheelOutcomes = [
     "Choose an implement and receive 10 spanks."
 ];
 
+let players = [];
+let currentPlayerIndex = 0;
+
+document.getElementById('addPlayer').addEventListener('click', function() {
+    const playerName = document.getElementById('playerName').value;
+    if (playerName) {
+        players.push(playerName);
+        const playerListItem = document.createElement('li');
+        playerListItem.textContent = playerName;
+        document.getElementById('playerList').appendChild(playerListItem);
+        document.getElementById('playerName').value = '';
+    }
+});
+
+document.getElementById('startGame').addEventListener('click', function() {
+    if (players.length > 0) {
+        document.querySelector('.player-setup').classList.add('hidden');
+        document.getElementById('gameArea').classList.remove('hidden');
+        document.getElementById('currentPlayer').textContent = `${players[currentPlayerIndex]}'s Turn`;
+    } else {
+        alert('Please add at least one player!');
+    }
+});
+
 document.getElementById('truthButton').addEventListener('click', function() {
     const result = truths[Math.floor(Math.random() * truths.length)];
     document.getElementById('result').textContent = result;
@@ -54,6 +78,12 @@ document.getElementById('spinButton').addEventListener('click', function() {
     }, 3000);  // Match this duration with the animation duration in CSS
 });
 
+document.getElementById('nextTurn').addEventListener('click', function() {
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    document.getElementById('currentPlayer').textContent = `${players[currentPlayerIndex]}'s Turn`;
+    document.getElementById('result').textContent = '';
+});
+
 document.getElementById('addTruth').addEventListener('click', function() {
     const newTruth = document.getElementById('newTruth').value;
     if (newTruth) {
@@ -72,11 +102,4 @@ document.getElementById('addDare').addEventListener('click', function() {
     }
 });
 
-document.getElementById('addOutcome').addEventListener('click', function() {
-    const newOutcome = document.getElementById('newOutcome').value;
-    if (newOutcome) {
-        wheelOutcomes.push(newOutcome);
-        document.getElementById('newOutcome').value = '';  // Clear the input field
-        alert('New spanking wheel outcome added!');
-    }
-});
+document.getElementById('add
